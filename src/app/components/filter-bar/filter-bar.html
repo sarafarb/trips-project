@@ -1,0 +1,25 @@
+<div class="filter-bar">
+
+  <input
+    #destInput
+    type="text"
+    placeholder="Search destination..."
+    [value]="destination()"
+    (input)="setDestination(destInput.value)"
+  />
+
+  <select
+    #sortSelect
+    [value]="sortType()"
+    (change)="setSortType(sortSelect.value)"
+  >
+    <option value="">Sort By</option>
+    <option value="price">Price</option>
+    <option value="date">Date</option>
+  </select>
+
+  <button (click)="reset()">
+    Reset
+  </button>
+
+</div>

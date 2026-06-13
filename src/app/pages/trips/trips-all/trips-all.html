@@ -1,0 +1,39 @@
+<div class="page">
+
+  <h1>All Trips ✈️</h1>
+
+  <app-filter-bar
+    (filterChange)="onFilterChange($event)"
+    (sortChange)="onSortChange($event)">
+  </app-filter-bar>
+
+  @if (isAdmin()) {
+    <div class="admin-actions">
+      <button class="btn-add" (click)="navigateToAddTrip()">+ Add Trip</button>
+    </div>
+  }
+
+  <div class="grid">
+    @for (trip of filteredTrips(); track trip.id) {
+      <app-trip-card
+        [trip]="trip"
+        [isAdmin]="isAdmin()"
+        [isBooked]="isBooked((trip.id!))" 
+        (click)="viewTripDetails(trip.id)"
+        (edit)="onEditTrip(trip)"
+        (delete)="openDeleteDialog(trip)">
+      </app-trip-card>
+    } @empty {
+      <div class="no-trips">לא נמצאו טיולים העונים על תנאי הסינון.</div>
+    }
+  </div>
+
+  @if (showDialog()) {
+    <app-confirm-dialog
+      title="Delete Trip"
+      message="Are you sure you want to delete this trip?"
+      (confirm)="confirmDelete()"
+      (cancel)="cancelDelete()">
+    </app-confirm-dialog>
+  }
+</div>

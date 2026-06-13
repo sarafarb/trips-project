@@ -1,0 +1,32 @@
+<div class="card">
+  <img [src]="trip().image" [alt]="trip().name" />
+
+  <div class="content">
+    <h3>{{ trip().name }}</h3>
+    <p class="dest">📍 {{ trip().destination }}</p>
+    <p class="date">🗓 {{ trip().startDate }}</p>
+    <p class="price">💰 {{ trip().price }}$</p>
+
+    @if (isBooked()) {
+    <div class="status">
+      ✔ Already booked
+    </div>
+    }
+
+    <div class="actions">
+      <a [routerLink]="['/trip', trip().id]" class="btn-view">
+        View
+      </a>
+      
+
+      @if (isAdmin()) {
+      <button class="btn-edit" (click)="onEdit($event)">
+        Edit
+      </button>
+      <button class="delete" (click)="onDelete($event)">
+        Delete
+      </button>
+      }
+    </div>
+  </div>
+</div>

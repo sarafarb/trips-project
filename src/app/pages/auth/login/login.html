@@ -1,0 +1,44 @@
+<main class="login-page">
+
+  <section class="login-card">
+
+    <h1>Login</h1>
+
+    <form (submit)="onLogin(); $event.preventDefault()">
+
+      <input
+        #usernameInput
+        type="text"
+        placeholder="Username"
+        [value]="name()"
+        (input)="name.set(usernameInput.value)"
+      />
+
+      <input
+        #passwordInput
+        type="password"
+        placeholder="Password"
+        [value]="password()"
+        (input)="password.set(passwordInput.value)"
+      />
+
+      <button type="submit">
+        Sign In
+      </button>
+
+      @if (error()) {
+        <p class="error">
+          {{ error() }}
+        </p>
+      }
+      
+      <a routerLink="/register">
+        Don't have an account?
+      </a>
+
+    </form>
+
+
+  </section>
+
+</main>

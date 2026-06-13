@@ -1,0 +1,23 @@
+<div class="page">
+
+  @if (isEdit()) {
+    <h1>Edit Trip</h1>
+  } @else {
+    <h1>Create Trip</h1>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <input placeholder="Name" formControlName="name" />
+    <input placeholder="Destination" formControlName="destination" />
+    <input type="date" formControlName="startDate" />
+    <input type="date" formControlName="endDate" />
+    <input type="number" placeholder="Price" formControlName="price" />
+    <textarea placeholder="Description" formControlName="description"></textarea>
+    <input placeholder="Image URL" formControlName="imageUrl" />
+
+    <button type="submit">
+      {{ isEdit() ? 'Update' : 'Create' }}
+    </button>
+  </form>
+
+</div>

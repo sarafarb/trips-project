@@ -1,0 +1,39 @@
+<header class="header">
+
+  <a
+    class="logo"
+    routerLink="/home">
+    ✈️ Travel App
+  </a>
+
+  @if (isLoggedIn()) {
+
+    <nav class="nav">
+
+      <span class="welcome">
+        Hi, {{ currentUser()?.name }}
+      </span>
+
+      <a
+        routerLink="/home/trips-all"
+        routerLinkActive="active">
+        All Trips
+      </a>
+
+      <a
+        routerLink="/home/my-trips"
+        routerLinkActive="active">
+        My Trips
+      </a>
+
+      <button
+        type="button"
+        (click)="logout()">
+        Logout
+      </button>
+
+    </nav>
+
+  }
+
+</header>

@@ -1,0 +1,49 @@
+<main class="register-page">
+
+  <section class="register-card">
+
+    <h1>Register</h1>
+
+    <form (submit)="onRegister(); $event.preventDefault()">
+
+      <input
+        #userInput
+        type="text"
+        placeholder="Username"
+        [value]="name()"
+        (input)="name.set(userInput.value)"
+      />
+
+      <input
+        #passInput
+        type="password"
+        placeholder="Password"
+        [value]="password()"
+        (input)="password.set(passInput.value)"
+      />
+
+      <input
+        #confirmInput
+        type="password"
+        placeholder="Confirm Password"
+        [value]="confirmPassword()"
+        (input)="confirmPassword.set(confirmInput.value)"
+      />
+
+      <button type="submit">
+        Create Account
+      </button>
+      <a [routerLink]="['/login']">
+        Already have an account?
+      </a>
+      @if (error()) {
+        <p class="error">
+          {{ error() }}
+        </p>
+      }
+
+    </form>
+
+  </section>
+
+</main>

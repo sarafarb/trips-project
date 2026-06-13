@@ -1,0 +1,101 @@
+@if (trip(); as currentTrip) {
+
+  <main class="page">
+
+    <button class="back" (click)="back()">
+      ← Back
+    </button>
+
+    <article class="card">
+
+      <img [src]="currentTrip.image"
+           [alt]="currentTrip.name" />
+
+      <section class="info">
+
+        @if (!isEditing()) {
+          <h1>{{ currentTrip.name }}</h1>
+          <p><strong>Destination:</strong> {{ currentTrip.destination }}</p>
+          <p>
+            <strong>Date:</strong>
+            {{ currentTrip.startDate }} - {{ currentTrip.endDate }}
+          </p>
+          <p>
+            <strong>Price:</strong>
+            ${{ currentTrip.price }}
+          </p>
+          <p class="desc">
+            {{ currentTrip.description }}
+          </p>
+          
+        } @else {
+          <div class="edit-form" style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+            
+            <label>Name:</label>
+            <input #nameInput [value]="currentTrip.name" />
+
+            <label>Destination:</label>
+            <input #destInput [value]="currentTrip.destination" />
+
+            <label>Price ($):</label>
+            <input #priceInput type="number" [value]="currentTrip.price" />
+
+            <label>Description:</label>
+            <textarea #descInput rows="4">{{ currentTrip.description }}</textarea>
+
+            <div class="actions" style="display: flex; gap: 10px; margin-top: 10px;">
+              <button (click)="saveChanges(nameInput.value, destInput.value, priceInput.value, descInput.value)" style="background: green; color: white;">
+                Save Changes
+              </button>
+              <button (click)="isEditing.set(false)">
+                Cancel
+              </button>
+            </div>
+            
+          </div>
+        }
+
+        <section class="booking">
+
+          @if (!isBooked()) {
+
+            <label for="people">
+              People
+            </label>
+
+            <input
+              id="people"
+              #peopleInput
+              type="number"
+              min="1"
+              [value]="peopleCount()"
+              (input)="setPeople(+peopleInput.value)"
+            />
+
+            <button (click)="bookTrip()">
+              Book Trip
+            </button>
+
+          } @else {
+
+            <section class="booked">
+
+              <p>✔ You are already booked</p>
+
+              <button (click)="cancelBooking()">
+                Cancel Booking
+              </button>
+
+            </section>
+
+          }
+
+        </section>
+
+      </section>
+
+    </article>
+
+  </main>
+
+}

@@ -1,0 +1,131 @@
+.layout {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 24px 28px;
+  border-radius: 28px;
+  background: rgba(15, 23, 42, 0.95);
+  color: white;
+  box-shadow: 0 24px 70px rgba(15, 23, 42, 0.16);
+  backdrop-filter: blur(18px);
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.logo::before {
+  content: '✈️';
+}
+
+.user-info {
+  flex: 1;
+  margin: 0 24px;
+  font-size: 14px;
+  color: #cbd5e1;
+}
+
+.nav a,
+.nav button {
+  border-radius: 14px;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.nav a {
+  color: #e2e8f0;
+  text-decoration: none;
+  background: rgba(255,255,255,0.08);
+}
+
+.nav a:hover,
+.nav button:hover {
+  transform: translateY(-1px);
+}
+
+.nav a.active {
+  color: white;
+  background: linear-gradient(135deg, #6366f1, #22c55e);
+  box-shadow: 0 12px 24px rgba(99, 102, 241, 0.16);
+}
+
+.nav button {
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  color: #f8fafc;
+  cursor: pointer;
+}
+
+.nav button:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.user-info {
+  flex: 1;
+  text-align: center;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* NAV */
+.nav {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.nav a {
+  color: white;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: 0.2s;
+}
+
+.nav a:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav a.active {
+  background: #3b82f6;
+}
+
+.nav button {
+  background: #ef4444;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+}
+
+.nav button:hover {
+  background: #dc2626;
+}
+
+/* CONTENT */
+.content {
+  flex: 1;
+  padding: 20px;
+  background: #f3f4f6;
+  overflow: auto;
+}

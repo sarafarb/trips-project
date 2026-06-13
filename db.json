@@ -1,0 +1,223 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Alice Johnson",
+      "email": "alice@example.com",
+      "password": "alice123",
+      "isAdmin": false
+    },
+    {
+      "id": "2",
+      "name": "Bob Smith",
+      "email": "bob@example.com",
+      "password": "bobpass",
+      "isAdmin": true
+    },
+    {
+      "id": "3",
+      "name": "Clara Brown",
+      "email": "clara@example.com",
+      "password": "clara321",
+      "isAdmin": false
+    },
+    {
+      "id": "4",
+      "name": "David Wilson",
+      "email": "david@example.com",
+      "password": "davidpass",
+      "isAdmin": false
+    },
+    {
+      "name": "שרה",
+      "password": "123456",
+      "isAdmin": false,
+      "id": "dnVjjt_vtVk"
+    }
+  ],
+  "trips": [
+    {
+      "id": "1",
+      "name": "Paris City Tour",
+      "destination": "Paris, France",
+      "startDate": "2026-03-15",
+      "endDate": "2026-03-20",
+      "price": 1500,
+      "description": "Explore the Eiffel Tower, Louvre Museum, and Seine river cruise.",
+      "image": "https://picsum.photos/id/1011/400/200"
+    },
+    {
+      "id": "2",
+      "name": "London Highlights",
+      "destination": "London, UK",
+      "startDate": "2026-04-01",
+      "endDate": "2026-04-06",
+      "price": 1400,
+      "description": "Visit Big Ben, London Eye, and British Museum.",
+      "image": "https://picsum.photos/id/1015/400/200"
+    },
+    {
+      "id": "3",
+      "name": "Rome & Vatican",
+      "destination": "Rome, Italy",
+      "startDate": "2026-04-15",
+      "endDate": "2026-04-20",
+      "price": 1600,
+      "description": "Tour the Colosseum, Vatican City, and Sistine Chapel.",
+      "image": "https://picsum.photos/id/1021/400/200"
+    },
+    {
+      "id": "4",
+      "name": "Barcelona & Beaches",
+      "destination": "Barcelona, Spain",
+      "startDate": "2026-05-05",
+      "endDate": "2026-05-10",
+      "price": 1550,
+      "description": "Enjoy Gaudi architecture, La Rambla, and Mediterranean beaches.",
+      "image": "https://picsum.photos/id/1025/400/200"
+    },
+    {
+      "id": "5",
+      "name": "Amsterdam Canals",
+      "destination": "Amsterdam, Netherlands",
+      "startDate": "2026-05-20",
+      "endDate": "2026-05-25",
+      "price": 1300,
+      "description": "Canal cruises, Van Gogh Museum, and local markets.",
+      "image": "https://picsum.photos/id/1031/400/200"
+    },
+    {
+      "id": "6",
+      "name": "Prague Old Town",
+      "destination": "Prague, Czech Republic",
+      "startDate": "2026-06-01",
+      "endDate": "2026-06-06",
+      "price": 1350,
+      "description": "Charles Bridge, Old Town Square, and Prague Castle.",
+      "image": "https://picsum.photos/id/1035/400/200"
+    },
+    {
+      "id": "7",
+      "name": "Vienna Culture Tour",
+      "destination": "Vienna, Austria",
+      "startDate": "2026-06-10",
+      "endDate": "2026-06-15",
+      "price": 1450,
+      "description": "Visit Schönbrunn Palace, State Opera, and MuseumsQuartier.",
+      "image": "https://picsum.photos/id/1038/400/200"
+    },
+    {
+      "id": "8",
+      "name": "Santorini Escape",
+      "destination": "Santorini, Greece",
+      "startDate": "2026-07-01",
+      "endDate": "2026-07-06",
+      "price": 1700,
+      "description": "Relax on volcanic beaches, explore Oia village and sunset cruises.",
+      "image": "https://picsum.photos/id/1041/400/200"
+    },
+    {
+      "id": "9",
+      "name": "Lisbon & Alfama",
+      "destination": "Lisbon, Portugal",
+      "startDate": "2026-07-15",
+      "endDate": "2026-07-20",
+      "price": 1400,
+      "description": "Historic trams, Alfama district, and local cuisine tours.",
+      "image": "https://picsum.photos/id/1045/400/200"
+    },
+    {
+      "id": "10",
+      "name": "Istanbul Wonders",
+      "destination": "Istanbul, Turkey",
+      "startDate": "2026-08-01",
+      "endDate": "2026-08-06",
+      "price": 1500,
+      "description": "Hagia Sophia, Blue Mosque, and Bosphorus cruise.",
+      "image": "https://picsum.photos/id/1049/400/200"
+    }
+  ],
+  "bookings": [
+    {
+      "people": 1,
+      "id": "1"
+    },
+    {
+      "people": 1,
+      "id": "2"
+    },
+    {
+      "id": "3",
+      "tripId": 3,
+      "userId": 1,
+      "people": 3
+    },
+    {
+      "id": "4",
+      "tripId": 5,
+      "userId": 4,
+      "people": 2
+    },
+    {
+      "id": "5",
+      "tripId": 8,
+      "userId": 3,
+      "people": 1
+    },
+    {
+      "id": "6",
+      "tripId": 10,
+      "userId": 1,
+      "people": 2
+    },
+    {
+      "id": "7",
+      "tripId": 1,
+      "userId": 1,
+      "people": 3
+    },
+    {
+      "id": "zmPOReCg4u8",
+      "userId": "0",
+      "tripId": 2,
+      "people": 1
+    },
+    {
+      "id": "Q0IdxAASB2w",
+      "userId": "0",
+      "tripId": 2,
+      "people": 1
+    },
+    {
+      "id": "CBYxCrNG1iQ",
+      "userId": "0",
+      "tripId": 10,
+      "people": 1
+    },
+    {
+      "id": "A_Y8vKnAGCk",
+      "userId": "0",
+      "tripId": 1,
+      "people": 1
+    },
+    {
+      "id": "OFNuXj-wSZ4",
+      "userId": "fKMbeepjjF4",
+      "tripId": 1,
+      "people": 1
+    },
+    {
+      "id": "olmrlA-QJu8",
+      "userId": "dnVjjt_vtVk",
+      "tripId": 2,
+      "people": 1
+    },
+    {
+      "id": "l0yKWQTPFko",
+      "userId": "dnVjjt_vtVk",
+      "tripId": 2,
+      "people": 1
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
