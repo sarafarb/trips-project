@@ -34,7 +34,11 @@ export class TripForm {
     this.route.paramMap.pipe(
       map(params => {
         const raw = params.get('id');
-        return raw === null ? null : Number(raw);
+        if (!raw || raw === 'new') {
+          return null;
+        }
+        const parsed = Number(raw);
+        return Number.isNaN(parsed) ? null : parsed;
       })
     ),
     { initialValue: null }
@@ -42,24 +46,33 @@ export class TripForm {
 
   isEdit = computed(() => this.tripId() !== null);
 
-  constructor() {
-    effect(() => {
-      const id = this.tripId();
-      if (id !== null) {
-        this.tripsService.getTripById(id).subscribe(trip => {
-          this.form.patchValue({
-            name: trip.name,
-            destination: trip.destination,
-            startDate: trip.startDate,
-            endDate: trip.endDate,
-            price: trip.price,
-            description: trip.description,
-            imageUrl: trip.image
-          });
+  private loadTrip = effect(() => {
+    const id = this.tripId();
+    if (id !== null) {
+      this.tripsService.getTripById(id).subscribe(trip => {
+        this.form.patchValue({
+          name: trip.name,
+          destination: trip.destination,
+          startDate: trip.startDate,
+          endDate: trip.endDate,
+          price: trip.price,
+          description: trip.description,
+          imageUrl: trip.image
         });
-      }
+      });
+      return;
+    }
+
+    this.form.reset({
+      name: '',
+      destination: '',
+      startDate: '',
+      endDate: '',
+      price: 0,
+      description: '',
+      imageUrl: ''
     });
-  }
+  });
 
   submit() {
     if (this.form.invalid) return;
@@ -80,12 +93,12 @@ export class TripForm {
 
     if (id !== null) {
       this.tripsService.updateTrip(id, tripData).subscribe({
-        next: () => this.router.navigate(['/trips']),
+        next: () => this.router.navigate(['/home/trips-all']),
         error: (err) => console.error('שגיאה בעדכון הטיול:', err)
       });
     } else {
       this.tripsService.createTrip(tripData).subscribe({
-        next: () => this.router.navigate(['/trips']),
+        next: () => this.router.navigate(['/home/trips-all']),
         error: (err) => console.error('שגיאה ביצירת הטיול:', err)
       });
     }

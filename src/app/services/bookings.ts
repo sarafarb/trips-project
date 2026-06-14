@@ -65,20 +65,25 @@ export class BookingsService {
   }
 
   // 👥 people count
-  getBookingPeopleCount(bookingId: number): number {
+  getBookingPeopleCount(userId: string | number, tripId: number): number {
     return this.bookingsSignal()
-      .find(b => b.id === bookingId)?.people ?? 0;
+      .find(b => b.userId === userId && b.tripId === tripId)?.people ?? 0;
   }
 
   // ✏️ update people
-  setBookingPeople(bookingId: number, people: number) {
+  setBookingPeople(userId: string | number, tripId: number, people: number) {
+    const booking = this.bookingsSignal()
+      .find(b => b.userId === userId && b.tripId === tripId);
+
+    if (!booking) return;
+
     this.bookingsSignal.update(list =>
       list.map(b =>
-        b.id === bookingId ? { ...b, people } : b
+        b.userId === userId && b.tripId === tripId ? { ...b, people } : b
       )
     );
 
-    this.http.put(`${this.apiUrl}/${bookingId}`, {
+    this.http.put(`${this.apiUrl}/${booking.id}`, {
       people
     }).subscribe();
   }

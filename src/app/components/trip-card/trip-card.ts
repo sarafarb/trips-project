@@ -14,9 +14,11 @@ export class TripCard {
   trip = input.required<Trip>(); 
   isAdmin = input<boolean>(false);
   isBooked = input<boolean>(false);
+  canBook = input<boolean>(false);
 
   edit = output<Trip>();
   delete = output<Trip>();
+  book = output<Trip>();
 
   onEdit(event: Event) {
     event.stopPropagation();
@@ -26,5 +28,10 @@ export class TripCard {
   onDelete(event: Event) {
     event.stopPropagation();
     this.delete.emit(this.trip());
+  }
+
+  onBook(event: Event) {
+    event.stopPropagation();
+    this.book.emit(this.trip());
   }
 }

@@ -1,8 +1,9 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { TripsService } from '../../../services/trips';
 import { AuthService } from '../../../services/auth';
+import { BookingsService } from '../../../services/bookings';
 
 import { TripCard } from '../../../components/trip-card/trip-card';
 import { FilterBar } from '../../../components/filter-bar/filter-bar';
@@ -17,10 +18,11 @@ import { Trip } from '../../../models/trip.model';
   templateUrl: './trips-all.html',
   styleUrl: './trips-all.css'
 })
-export class TripsAll {
+export class TripsAll implements OnInit {
   // Services
   private tripsService = inject(TripsService);
   private authService = inject(AuthService);
+  private bookingsService = inject(BookingsService);
   private router = inject(Router);
 
   // State
@@ -38,8 +40,9 @@ export class TripsAll {
   currentUser = this.authService.currentUser;
   isAdmin = computed(() => !!this.currentUser()?.isAdmin);
 
-  constructor() {
+  ngOnInit() {
     this.tripsService.loadTrips();
+    this.bookingsService.loadBookings();
   }
 
   // Computed
@@ -98,11 +101,16 @@ export class TripsAll {
   // בדיקה ריאקטיבית - האם המשתמש רשום לטיול
   isBooked(tripId: number | string | undefined): boolean {
     const user = this.currentUser();
-    if (!user) return false;
+    if (!user || tripId === undefined || tripId === null) return false;
 
-    const trip = this.tripsService.trips().find((t) => t.id === Number(tripId));
-    const registeredUsers = (trip as any)?.registeredUserIds || [];
-    return registeredUsers.includes(user.id);
+    return this.bookingsService.isUserBooked(String(user.id), Number(tripId));
+  }
+
+  bookTrip(trip: Trip) {
+    const user = this.currentUser();
+    if (!user || !trip.id) return;
+
+    this.bookingsService.bookTrip(String(user.id), Number(trip.id), 1);
   }
 
   // Actions
@@ -152,6 +160,6 @@ export class TripsAll {
   }
 
   navigateToAddTrip() {
-    this.router.navigate(['/trips/add']);
+    this.router.navigate(['/trip', 'new']);
   }
 }

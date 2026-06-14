@@ -17,7 +17,12 @@
       <a [routerLink]="['/trip', trip().id]" class="btn-view">
         View
       </a>
-      
+
+      @if (canBook() && !isBooked()) {
+      <button class="btn-book" (click)="onBook($event)">
+        Book
+      </button>
+      }
 
       @if (isAdmin()) {
       <button class="btn-edit" (click)="onEdit($event)">

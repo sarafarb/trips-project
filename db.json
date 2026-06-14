@@ -33,6 +33,12 @@
       "password": "123456",
       "isAdmin": false,
       "id": "dnVjjt_vtVk"
+    },
+    {
+      "id": "Ok_QLH-Ktcc",
+      "name": "sara",
+      "password": "123456",
+      "isAdmin": false
     }
   ],
   "trips": [
@@ -58,7 +64,7 @@
     },
     {
       "id": "3",
-      "name": "Rome & Vatican",
+      "name": "Rome",
       "destination": "Rome, Italy",
       "startDate": "2026-04-15",
       "endDate": "2026-04-20",
@@ -135,6 +141,16 @@
       "price": 1500,
       "description": "Hagia Sophia, Blue Mosque, and Bosphorus cruise.",
       "image": "https://picsum.photos/id/1049/400/200"
+    },
+    {
+      "name": "bhjb",
+      "destination": "nkjbkjb",
+      "startDate": "2026-06-15",
+      "endDate": "2026-06-22",
+      "price": 1555,
+      "description": "lkmj",
+      "image": ",k",
+      "id": "Muy5XOlL7fU"
     }
   ],
   "bookings": [
@@ -207,15 +223,27 @@
       "people": 1
     },
     {
-      "id": "olmrlA-QJu8",
+      "id": "f9vINpkPfGw",
       "userId": "dnVjjt_vtVk",
-      "tripId": 2,
+      "tripId": 1,
       "people": 1
     },
     {
-      "id": "l0yKWQTPFko",
+      "id": "f8wK2TdmSfQ",
       "userId": "dnVjjt_vtVk",
-      "tripId": 2,
+      "tripId": 3,
+      "people": 1
+    },
+    {
+      "id": "nZypKdJBmpQ",
+      "userId": "dnVjjt_vtVk",
+      "tripId": 10,
+      "people": 1
+    },
+    {
+      "id": "KzkJkW6JFtA",
+      "userId": "2",
+      "tripId": 3,
       "people": 1
     }
   ],

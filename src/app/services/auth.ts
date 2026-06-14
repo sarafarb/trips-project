@@ -1,4 +1,4 @@
-import { Injectable, inject, signal, computed } from '@angular/core';
+import { Injectable, inject, signal, computed, effect } from '@angular/core';
 import { map, switchMap, of, tap } from 'rxjs';
 import { User } from '../models/user.model';
 import { UsersService } from './users';
@@ -9,12 +9,37 @@ import { UsersService } from './users';
 export class AuthService {
 
   private usersService = inject(UsersService);
+  private storageKey = 'trips-app-current-user';
 
   private currentUserSignal = signal<User | null>(null);
 
   currentUser = this.currentUserSignal.asReadonly();
 
   isLoggedIn = computed(() => this.currentUserSignal() !== null);
+
+  private initCurrentUser = effect(() => {
+    if (typeof window === 'undefined' || !window.localStorage) return;
+
+    const raw = localStorage.getItem(this.storageKey);
+    if (!raw) return;
+
+    try {
+      this.currentUserSignal.set(JSON.parse(raw));
+    } catch {
+      localStorage.removeItem(this.storageKey);
+    }
+  });
+
+  private setCurrentUser(user: User | null) {
+    this.currentUserSignal.set(user);
+    if (typeof window === 'undefined' || !window.localStorage) return;
+
+    if (user) {
+      localStorage.setItem(this.storageKey, JSON.stringify(user));
+    } else {
+      localStorage.removeItem(this.storageKey);
+    }
+  }
 
   // LOGIN
   login(name: string, password: string) {
@@ -25,7 +50,7 @@ export class AuthService {
         );
 
         if (user) {
-          this.currentUserSignal.set(user);
+          this.setCurrentUser(user);
         }
 
         return user || null;
@@ -51,7 +76,7 @@ export class AuthService {
             };
 
             return this.usersService.createUser(newUser).pipe(
-              tap(user => this.currentUserSignal.set(user))
+              tap(user => this.setCurrentUser(user))
             );
           })
         );
@@ -61,7 +86,7 @@ export class AuthService {
 
   // LOGOUT
   logout() {
-    this.currentUserSignal.set(null);
+    this.setCurrentUser(null);
   }
 
   // GET CURRENT USER

@@ -18,10 +18,12 @@
       <app-trip-card
         [trip]="trip"
         [isAdmin]="isAdmin()"
-        [isBooked]="isBooked((trip.id!))" 
+        [isBooked]="isBooked((trip.id!))"
+        [canBook]="!!currentUser() && !isBooked((trip.id!))"
         (click)="viewTripDetails(trip.id)"
         (edit)="onEditTrip(trip)"
-        (delete)="openDeleteDialog(trip)">
+        (delete)="openDeleteDialog(trip)"
+        (book)="bookTrip($event)">
       </app-trip-card>
     } @empty {
       <div class="no-trips">לא נמצאו טיולים העונים על תנאי הסינון.</div>

@@ -1,95 +1,102 @@
-import { Component, inject, computed, signal } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal, toObservable } from '@angular/core/rxjs-interop';
-import { map, switchMap } from 'rxjs';
+import { map, switchMap, of } from 'rxjs';
 
 import { BookingsService } from '../../../services/bookings';
 import { TripsService } from '../../../services/trips';
 import { AuthService } from '../../../services/auth';
 import { Trip } from '../../../models/trip.model';
+import { TripForm } from '../../../components/trip-form/trip-form';
 
 @Component({
   selector: 'app-trip-details',
   standalone: true,
-  imports: [],
+  imports: [TripForm],
   templateUrl: './trip-details.html',
   styleUrl: './trip-details.css'
 })
 export class TripDetails {
   private route = inject(ActivatedRoute);
-  private router = inject(Router); // הוספנו את הראוטר כדי שנוכל לנקות את ה-URL בסיום
+  private router = inject(Router);
   private tripsService = inject(TripsService);
   private authService = inject(AuthService);
   private bookingsService = inject(BookingsService);
 
-  private id = toSignal(
-    this.route.paramMap.pipe(map(params => Number(params.get('id')))),
-    { requireSync: true }
+  private rawId = toSignal(
+  this.route.paramMap.pipe(
+    map(params => params.get('id'))
+  ),
+  {
+    initialValue: null
+  }
+);
+  private editQuery = toSignal(
+    this.route.queryParamMap.pipe(map(params => params.get('edit') === 'true')),
+    { initialValue: false }
   );
+
+  id = computed(() => {
+    const raw = this.rawId();
+    if (!raw || raw === 'new') return null;
+    const parsed = Number(raw);
+    return Number.isNaN(parsed) ? null : parsed;
+  });
+
+  isNew = computed(() => this.rawId() === 'new');
+  isEditing = computed(() => this.isNew() || this.editQuery());
 
   trip = toSignal(
     toObservable(this.id).pipe(
-      switchMap(id => this.tripsService.getTripById(id))
-    )
-  );
-
-  // 1. קוראים באופן חד-פעמי האם הגענו לדף הזה במצב עריכה
-  isEditing = signal<boolean>(
-    this.route.snapshot.queryParamMap.get('edit') === 'true'
+      switchMap(id => {
+        if (id === null) return of(null);
+        return this.tripsService.getTripById(id);
+      })
+    ),
+    { initialValue: null }
   );
 
   currentUser = this.authService.currentUser;
-  userId = computed(() => String(this.currentUser()?.id || "0"));
-  
-  hasTrip = computed(() => !!this.trip());
+  userId = computed(() => String(this.currentUser()?.id || '0'));
 
   isBooked = computed(() => {
     const user = this.currentUser();
     const currentTrip = this.trip();
     if (!user || !currentTrip) return false;
-    return this.bookingsService.isUserBooked(String(user.id), Number(currentTrip.id) );
+    return this.bookingsService.isUserBooked(String(user.id), Number(currentTrip.id));
   });
-
-  // 2. פונקציית שמירה של הנתונים
-  saveChanges(updatedName: string, updatedDest: string, updatedPrice: string, updatedDesc: string) {
-    const currentTrip = this.trip();
-    if (!currentTrip) return;
-
-    const updatedTrip: Trip = {
-      ...currentTrip,
-      name: updatedName,
-      destination: updatedDest,
-      price: Number(updatedPrice),
-      description: updatedDesc
-    };
-
-    // כאן את קוראת לסרביס לעדכן את השרת (תורידי את ההערה אם יש לך פונקציה כזו)
-    // this.tripsService.updateTrip(Number(updatedTrip.id), updatedTrip);
-
-    // סוגרים את מצב העריכה וחוזרים לתצוגה רגילה
-    this.isEditing.set(false);
-    
-    // מנקים את ה-?edit=true מה-URL כדי שזה יראה נקי
-    this.router.navigate([], { queryParams: { edit: null }, queryParamsHandling: 'merge' });
-  }
 
   bookTrip() {
     const user = this.currentUser();
     const trip = this.trip();
     if (user && trip) {
-      this.bookingsService.bookTrip(String(user.id),Number(trip.id), 1);
+      this.bookingsService.bookTrip(String(user.id), Number(trip.id), 1);
     }
   }
 
   cancelBooking() {
-    this.bookingsService.cancelBooking(this.userId(), this.id());
+    const user = this.currentUser();
+    const tripId = this.id();
+    if (!user || tripId === null) return;
+
+    this.bookingsService.cancelBooking(String(user.id), tripId);
   }
 
   setPeople(quantity: number) {
-    this.bookingsService.setBookingPeople(this.id(), quantity);
+    const user = this.currentUser();
+    const tripId = this.id();
+    if (!user || tripId === null) return;
+
+    this.bookingsService.setBookingPeople(String(user.id), tripId, quantity);
   }
 
-  peopleCount = computed(() => this.bookingsService.getBookingPeopleCount(this.id()));
+  peopleCount = computed(() => {
+    const user = this.currentUser();
+    const tripId = this.id();
+    if (!user || tripId === null) return 0;
+
+    return this.bookingsService.getBookingPeopleCount(String(user.id), tripId);
+  });
 
   back() {
     window.history.back();
