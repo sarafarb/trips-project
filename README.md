@@ -47,25 +47,17 @@ src/app/
 │       └── not-found.ts | not-found.html | not-found.css
 │
 ├── services/                   # שכבת הלוגיקה והתקשורת מול ה-API (JSON Server)
-│   ├── auth.service.ts         # ניהול משתמשים, התחברות, הרשמה ובדיקת הרשאות
+│   ├── auth.ts         # ניהול משתמשים, התחברות, הרשמה ובדיקת הרשאות
 │   ├── trips.ts                # ניהול נתוני הטיולים (קריאה, הוספה, עריכה ומחיקה)
-│   ├── bookings.service.ts     # ניהול מערך הזמנות הטיולים של המשתמשים
-│   └── users.service.ts        # שירות עזר לניהול משתמשים ורשומות בבסיס הנתונים
+│   ├── bookings.ts     # ניהול מערך הזמנות הטיולים של המשתמשים
+│   └── users.ts        # שירות עזר לניהול משתמשים ורשומות בבסיס הנתונים
 │
 ├── models/                     # ממשקים (Interfaces) המגדירים את טיפוסי הנתונים
 │   ├── trip.model.ts           # מודל הנתונים של טיול (Trip)
 │   ├── booking.model.ts        # מודל הנתונים של הזמנה (Booking)
 │   └── user.model.ts           # מודל הנתונים של משתמש ומנהל (User)
 │
-└── shared/                     # רכיבי עזר גלובליים הניתנים לשימוש חוזר בכל מקום
-    ├── pipes/                  # פייפים מותאמים אישית לטרנספורמציית נתונים ב-HTML
-    │   ├── date.pipe.ts        # עימוד והצגה אחידה של תאריכים
-    │   └── price.pipe.ts       # עימוד והצגה של מחירים כולל סימול מטבע מותאם
-    ├── directives/             # דיירקטיבים מותאמים אישית לשינוי התנהגות ונראות אלמנטים
-    │   └── highlight.directive.ts # הדגשה ויזואלית של אלמנטים נבחרים במעבר עכבר
-    └── utils/                  # פונקציות עזר עצמאיות ותשתית ולידציה
-        ├── helpers.ts          # פונקציות גנריות (לדוגמה: יצירת מזהה ייחודי)
-        └── validators.ts       # ולידטורים מותאמים אישית לבדיקת תקינות טפסים
+└
 
 
 ⚙️ Services ותפקידם במערכת
@@ -199,7 +191,7 @@ src/app/services/trips.ts
 
 TripService
 
-loadAllTrips()
+loadTrips()
 
 מושכת את כל רשומות הטיולים מהשרת אל תוך הסטייט
 
@@ -207,7 +199,7 @@ src/app/services/bookings.service.ts
 
 BookingsService
 
-createBooking(data)
+bookTrip(data)
 
 שולחת בקשת POST ליצירת הזמנת טיול חדשה בשרת
 
@@ -215,7 +207,7 @@ src/app/pages/auth/login/login.ts
 
 LoginComponent
 
-handleLogin()
+onSubmit()
 
 קולטת את נתוני הטופס ומעבירה אותם לסרוויס האימות
 
@@ -266,60 +258,3 @@ ConfirmDialog
 confirm = output()
 
 מייצרת אירוע המאשר את ביצוע הפעולה לאחר לחיצה
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.9.
-
-## Development server
-
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
